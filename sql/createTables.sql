@@ -1,0 +1,42 @@
+CREATE TYPE "PRIVACY" AS ENUM ('public', 'not listed', 'private');
+
+
+CREATE TABLE IF NOT EXISTS "users" (
+	"id" SERIAL PRIMARY KEY,
+	"username" VARCHAR(60) NOT NULL UNIQUE,
+	"password" VARCHAR(120) NOT NULL,
+	"admin" BOOLEAN DEFAULT FALSE NOT NULL,
+	"createdAt" TIMESTAMP DEFAULT NOW() NOT NULL
+);
+
+
+CREATE TABLE IF NOT EXISTS "playlists" (
+	"id" SERIAL PRIMARY KEY,
+	"name" VARCHAR(100) NOT NULL,
+	"privacy" "PRIVACY" NOT NULL DEFAULT 'public',
+	"description" TEXT,
+	"createdAt" TIMESTAMP DEFAULT NOW() NOT NULL,
+	"userID" INTEGER NOT NULL,
+	FOREIGN KEY ("userID") REFERENCES "users"("id")
+		ON DELETE CASCADE
+);
+
+
+CREATE TABLE IF NOT EXISTS "musics" (
+	"id" SERIAL PRIMARY KEY,
+	"name" VARCHAR(100) NOT NULL,
+	"author" VARCHAR(100) NOT NULL,
+	"album" VARCHAR(255)
+);
+
+
+CREATE TABLE IF NOT EXISTS "music_playlists" (
+	"id" SERIAL PRIMARY KEY,
+	"addedIn" TIMESTAMP DEFAULT NOW() NOT NULL,
+	"musicID" INTEGER,
+	"playlistID" INTEGER NOT NULL,
+	FOREIGN KEY ("musicID") REFERENCES "musics"("id")
+		ON DELETE SET NULL,
+	FOREIGN KEY ("playlistID") REFERENCES "playlists"("id")
+		ON DELETE CASCADE
+);
