@@ -1,8 +1,9 @@
 import app from "./app";
-import startDatabase from "./database/connection";
+import { startDatabase } from "./database";
 
 const PORT: number = Number(process.env.PORT || 3000);
-app.listen( PORT, async(): Promise<void> =>{
-    await startDatabase()
-    console.log(`Server running on http://localhost:${PORT}`)
-})
+
+app.listen(PORT, async () => {
+  await startDatabase();
+  console.log(`App running on port ${PORT}`);
+});
