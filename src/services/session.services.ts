@@ -21,8 +21,8 @@ const create  = async (payload: SessionCreate): Promise<SessionReturn> =>{
 
     const token: string = sign(
         {username: user.username, admin: user.admin},
-        "chave secreta",
-        { subject: user.id.toString(), expiresIn: "3min"}
+        process.env.SECRET_KEY!,
+        { subject: user.id.toString(), expiresIn: process.env.EXPIRES_IN!}
     )
 
     return { token }
