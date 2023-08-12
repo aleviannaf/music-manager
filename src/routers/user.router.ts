@@ -11,9 +11,9 @@ userRouter.post(
   middlewares.validateUsernameExists,
   userControllers.create
 );
-userRouter.get("", userControllers.read);
+userRouter.get("", middlewares.verifyToken, userControllers.read);
 
-userRouter.use("/:userId", middlewares.validateIdExists);
+userRouter.use("/:userId", middlewares.validateIdExists, middlewares.verifyToken, middlewares.verifyUserPermisson);
 
 userRouter.get("/:userId", userControllers.retrieve);
 userRouter.patch(
