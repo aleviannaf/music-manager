@@ -1,3 +1,3 @@
 import userControllers from "./user.controllers";
-
-export { userControllers };
+import sessionControllers from "./session.controllers";
+export { userControllers, sessionControllers };
