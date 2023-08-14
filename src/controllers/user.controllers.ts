@@ -1,9 +1,10 @@
 import { Request, Response } from "express";
-import { User, UserRead } from "../interfaces";
+import { User, UserRead, UserReturn } from "../interfaces";
 import { userServices } from "../services";
+import { userReturn } from "../schemas";
 
 const create = async (req: Request, res: Response): Promise<Response> => {
-  const user: User = await userServices.create(res.locals.validated);
+  const user: UserReturn = await userServices.create(res.locals.validated);
   return res.status(201).json(user);
 };
 
@@ -13,7 +14,7 @@ const read = async (req: Request, res: Response): Promise<Response> => {
 };
 
 const retrieve = async (req: Request, res: Response): Promise<Response> => {
-  const user: User = res.locals.foundUser;
+  const user: UserReturn = userReturn.parse(res.locals.foundUser);
   return res.status(200).json(user);
 };
 
@@ -23,7 +24,7 @@ const partialUpdate = async (
 ): Promise<Response> => {
   const { userId } = req.params;
   const { validated } = res.locals;
-  const user: User = await userServices.partialUpdate(userId, validated);
+  const user: UserReturn = await userServices.partialUpdate(userId, validated);
   return res.status(200).json(user);
 };
 
