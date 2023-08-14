@@ -2,6 +2,7 @@ import { sign } from "jsonwebtoken";
 import { client } from "../database";
 import { AppError } from "../errors";
 import { SessionReturn, SessionCreate, UserResult, User} from "../interfaces";
+import { compare } from "bcryptjs";
 
 const create  = async (payload: SessionCreate): Promise<SessionReturn> =>{
     const query: UserResult = await client.query(
@@ -14,8 +15,9 @@ const create  = async (payload: SessionCreate): Promise<SessionReturn> =>{
     }
     
     const user: User = query.rows[0]
+    const samePassword: boolean = await compare(payload.password, user.password)
 
-    if(user.password !== payload.password){
+    if(!samePassword){
         throw new AppError("Username or password is incorrect", 401)
     }
 
