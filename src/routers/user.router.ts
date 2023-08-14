@@ -11,7 +11,7 @@ userRouter.post(
   middlewares.validateUsernameExists,
   userControllers.create
 );
-userRouter.get("", middlewares.verifyToken, userControllers.read);
+userRouter.get("", middlewares.verifyToken, middlewares.verifyUserPermisson, userControllers.read);
 
 userRouter.use("/:userId", middlewares.validateIdExists, middlewares.verifyToken, middlewares.verifyUserPermisson);
 
