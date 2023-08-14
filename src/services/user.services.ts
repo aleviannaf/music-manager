@@ -4,12 +4,16 @@ import {
   UserCreate,
   UserRead,
   UserResult,
+  UserReturn,
   UserUpdate,
 } from "../interfaces";
 import { client } from "../database";
-import { userRead } from "../schemas";
+import { userRead, userReturn } from "../schemas";
+import { hash } from "bcryptjs";
 
-const create = async (payload: UserCreate): Promise<any> => {
+const create = async (payload: UserCreate): Promise<UserReturn> => {
+  payload.password = await hash(payload.password, 10)  
+
   const queryFormat: string = format(
     'INSERT INTO "users" (%I) VALUES (%L) RETURNING *;',
     Object.keys(payload),
@@ -17,7 +21,7 @@ const create = async (payload: UserCreate): Promise<any> => {
   );
 
   const query: UserResult = await client.query(queryFormat);
-  return query.rows[0];
+  return userReturn.parse(query.rows[0]);
 };
 
 const read = async (): Promise<UserRead> => {
@@ -28,7 +32,10 @@ const read = async (): Promise<UserRead> => {
 const partialUpdate = async (
   userId: string,
   payload: UserUpdate
-): Promise<User> => {
+): Promise<UserReturn> => {
+  if(payload.password){
+    payload.password = await hash(payload.password, 10) 
+  }
   const queryFormat: string = format(
     'UPDATE "users" SET (%I) = ROW (%L) WHERE "id" = $1 RETURNING *;',
     Object.keys(payload),
@@ -36,7 +43,7 @@ const partialUpdate = async (
   );
 
   const query: UserResult = await client.query(queryFormat, [userId]);
-  return query.rows[0];
+  return userReturn.parse(query.rows[0]);
 };
 
 const destroy = async (userId: string): Promise<void> => {
