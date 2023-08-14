@@ -14,4 +14,4 @@ const userCreate = user.omit({ id: true, createdAt: true });
 const userUpdate = userCreate.partial();
 const userRead = userReturn.array();
 
-export { user, userCreate, userUpdate, userRead };
+export { user, userCreate, userUpdate, userRead, userReturn };

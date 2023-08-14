@@ -1,4 +1,4 @@
-import { user, userCreate, userUpdate, userRead } from "./user.schema";
+import { user, userCreate, userUpdate, userRead, userReturn } from "./user.schema";
 import { sessionCreate } from "./session.schema";
 
-export { user, userCreate, userUpdate, userRead, sessionCreate};
+export { user, userCreate, userUpdate, userRead, sessionCreate, userReturn};
