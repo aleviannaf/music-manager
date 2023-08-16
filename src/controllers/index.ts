@@ -1,3 +1,4 @@
 import userControllers from "./user.controllers";
 import sessionControllers from "./session.controllers";
-export { userControllers, sessionControllers };
+import playlistControllers from "./playlist.controllers";
+export { userControllers, sessionControllers, playlistControllers };
