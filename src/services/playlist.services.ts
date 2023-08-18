@@ -15,4 +15,32 @@ const create = async (payload: PlaylistCreate, userId: string): Promise<Playlist
     return queryResult.rows[0]
 }
 
-export default { create }
+const read = async (admin: boolean): Promise<Playlist[]> =>{
+  if(!admin){
+    const queryString: string = `
+    SELECT 
+      p.*, u.username 
+    FROM "playlists" "p" 
+    JOIN "users" "u" 
+      ON "p"."userID" = "u"."id"
+      WHERE "p"."privancy" != 'private';
+    `
+    const query: PlaylistResult = await client.query(queryString)
+    
+    return query.rows;
+  }
+
+  const queryString: string = `
+  SELECT 
+    p.*, u.username 
+  FROM "playlists" "p" 
+  JOIN "users" "u" 
+    ON "p"."userID" = "u"."id";
+  `
+  const query: PlaylistResult = await client.query(queryString)
+  
+  return query.rows;
+ 
+}
+
+export default { create, read }
