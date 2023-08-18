@@ -18,6 +18,12 @@ import {
   PlaylistResult
 } from "./playlist.interfaces"
 
+import  { 
+  Music, 
+  MusicCreate, 
+  MusicResult  
+} from "./music.interface"
+
 export {
   User,
   UserCreate,
@@ -30,4 +36,7 @@ export {
   PlaylistCreate,
   Playlist,
   PlaylistResult,
+  Music, 
+  MusicCreate, 
+  MusicResult  
 };
