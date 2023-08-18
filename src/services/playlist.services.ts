@@ -1,6 +1,8 @@
 import format from "pg-format";
-import { Playlist, PlaylistCreate, PlaylistResult } from "../interfaces";
+import { Playlist, PlaylistAddMusic, PlaylistCreate, PlaylistResult } from "../interfaces";
 import { client } from "../database";
+import { QueryResult } from "pg";
+import { AppError } from "../errors";
 
 const create = async (payload: PlaylistCreate, userId: string): Promise<Playlist> => {
 
@@ -43,4 +45,22 @@ const read = async (admin: boolean): Promise<Playlist[]> =>{
  
 }
 
-export default { create, read }
+const addMusic = async (payload: PlaylistAddMusic, playlistID: string) =>{
+  const query: QueryResult = await client.query(
+    `SELECT * FROM "music_playlists" WHERE "musicID" = $1 AND "playlistID" = $2;`,
+    [payload.musicID, playlistID]
+  )
+
+  if(query.rowCount !== 0) throw new AppError("Music already added to playlist", 409)
+
+  await client.query(
+    `INSERT INTO "music_playlists" ("musicID", "playlistID") VALUES ($1, $2);`,
+    [payload.musicID, playlistID]
+  )
+
+
+
+  return "Music added to playlist"
+}
+
+export default { create, read, addMusic }
