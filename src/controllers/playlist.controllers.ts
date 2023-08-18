@@ -16,8 +16,17 @@ const read = async (req: Request, res: Response): Promise<Response> => {
         res.locals.decoded.admin
     )
     
-    return res.status(201).json(playlist)
+    return res.status(200).json(playlist)
+}
+
+const addMusic = async (req: Request, res: Response): Promise<Response> => {
+    const { validated } = res.locals
+    const { playlistID } = req.params
+
+    const message: string = await playlistServices.addMusic(validated, playlistID)
+    
+    return res.status(200).json(message)
 }
 
 
-export default { create, read }
+export default { create, read, addMusic  }
