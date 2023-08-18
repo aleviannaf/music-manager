@@ -12,4 +12,10 @@ playlistRouter.post(
     playlistControllers.create
 )
 
+playlistRouter.get(
+    "",
+    middlewares.verifyToken,
+    playlistControllers.read
+)
+
 export default playlistRouter
