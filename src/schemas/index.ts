@@ -1,6 +1,6 @@
 import { user, userCreate, userUpdate, userRead, userReturn } from "./user.schema";
 import { sessionCreate } from "./session.schema"
-import { playlist, playlistCreate } from "./playlist.schemas"
+import { playlist, playlistCreate,playlistAddMusic  } from "./playlist.schemas"
 import { music, musicCreate } from "./music.schema";
 
 export {
@@ -13,5 +13,6 @@ export {
     playlist,
     playlistCreate,
     music, 
-    musicCreate
+    musicCreate,
+    playlistAddMusic 
 };

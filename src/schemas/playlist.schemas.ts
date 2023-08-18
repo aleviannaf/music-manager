@@ -15,4 +15,8 @@ const playlistCreate = playlist.omit({
     userID: true
 })
 
-export { playlist, playlistCreate }
+const playlistAddMusic = z.object({
+    musicID: z.number().positive()
+})
+
+export { playlist, playlistCreate, playlistAddMusic  }
