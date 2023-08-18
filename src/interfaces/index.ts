@@ -15,7 +15,8 @@ import {
 import {
   PlaylistCreate,
   Playlist,
-  PlaylistResult
+  PlaylistResult,
+  PlaylistAddMusic 
 } from "./playlist.interfaces"
 
 import  { 
@@ -36,6 +37,7 @@ export {
   PlaylistCreate,
   Playlist,
   PlaylistResult,
+  PlaylistAddMusic ,
   Music, 
   MusicCreate, 
   MusicResult  
