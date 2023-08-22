@@ -22,7 +22,8 @@ import {
 import  { 
   Music, 
   MusicCreate, 
-  MusicResult  
+  MusicResult,
+  MusicPagination
 } from "./music.interface"
 
 export {
@@ -40,5 +41,6 @@ export {
   PlaylistAddMusic ,
   Music, 
   MusicCreate, 
-  MusicResult  
+  MusicResult,
+  MusicPagination
 };
