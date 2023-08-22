@@ -1,5 +1,5 @@
 import { Response, Request } from "express"
-import { Music } from "../interfaces"
+import { Music, MusicPagination } from "../interfaces"
 import { musicServices } from "../services"
 
 const create = async (req: Request, res: Response): Promise<Response> =>{
@@ -9,7 +9,7 @@ const create = async (req: Request, res: Response): Promise<Response> =>{
 }
 
 const read = async (req: Request, res: Response): Promise<Response> =>{
-    const musics: Music[] = await musicServices.read()
+    const musics: MusicPagination = await musicServices.read(req.query)
 
     return res.status(200).json(musics)
 }
