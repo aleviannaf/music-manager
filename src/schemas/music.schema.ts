@@ -9,4 +9,12 @@ const music = z.object({
 
 const musicCreate = music.omit({id:true}).array()
 
-export { music, musicCreate }
+const musicPagination = z.object({
+    prevPage: z.string().nullable(),
+    nextPage: z.string().nullable(),
+    currentPage: z.number().positive(),
+    totalItens: z.number(),
+    data: music.array()
+})
+
+export { music, musicCreate, musicPagination }
