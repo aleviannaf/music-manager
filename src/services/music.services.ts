@@ -4,13 +4,29 @@ import { client } from "../database";
 import { QueryConfig, QueryResult } from "pg";
 import { musicPagination } from "../schemas";
 
+type TMusicCreate = {
+    name: string
+    author: string
+    album?: string | undefined | null
+}
+
 const create = async (payload: MusicCreate): Promise<Music[]> => {
-    const columns: string[] = Object.keys(payload[0])
-    const values: any[][] = payload.map((el) => Object.values(el))
+    const uniqueKeys: string[] = Array.from(
+        new Set(payload.flatMap(el => Object.keys(el)))
+    )
+    const values: any[][] = payload.map((music: TMusicCreate) => {
+        const newObj: any = {}
+
+        for(const key of uniqueKeys){
+            newObj[key] = music[key as keyof TMusicCreate] || null
+        }
+
+        return Object.values(newObj)
+    })
 
     const queryFormat: string = format(
         `INSERT INTO "musics" (%I) VALUES %L RETURNING *;`,
-        columns,
+        uniqueKeys,
         values
     )
 
@@ -31,7 +47,7 @@ const read = async (payload: any): Promise<MusicPagination> => {
         text: `SELECT * FROM "musics" OFFSET $1 LIMIT $2;`,
         values: [perPage * (page - 1), perPage]
     }
-    
+
     const queryResult: MusicResult = await client.query(queryConfig)
 
 
