@@ -21,8 +21,8 @@ playlistRouter.get(
 playlistRouter.post(
     "/:playlistID/add",
     middlewares.validateBody(playlistAddMusic),
-    middlewares.validatedPlaylistIdExists,
-    middlewares.validatedIdBodyExists,
+    middlewares.validateIdExists("params", "playlistId", "playlists", "Playlist not found."),
+    middlewares.validateIdExists("body", "musicId", "musics", "Music not found."),
     middlewares.verifyToken,
     playlistControllers.addMusic
 )

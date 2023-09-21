@@ -5,8 +5,6 @@ import validateBody from "./validateBody.middleware";
 import verifyToken from "./verifyToken.middleware";
 import verifyUserPermisson from "./verifyUserPermission.middleware";
 import validatedAdmin from "./validatedAdmin.middleware";
-import validatedPlaylistIdExists from "./validatedPlaylistIdExists.middleware";
-import validatedIdBodyExists from "./validatedIdBodyExists.middleware";
 
 export default {
   handleErrors,
@@ -15,7 +13,5 @@ export default {
   validateBody,
   verifyToken,
   verifyUserPermisson,
-  validatedAdmin,
-  validatedPlaylistIdExists,
-  validatedIdBodyExists
+  validatedAdmin
 };
